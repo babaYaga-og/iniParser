@@ -1,7 +1,7 @@
 # iniParser  
 Simple INI Parser written in C++.  
-#Usage  
-##Example  
+# Usage  
+## Example  
 I still have some work to do so this code will not work for now...  
 ```cpp
 #include <iostream>
