@@ -1,7 +1,8 @@
-# iniParser  
-Simple INI Parser written in C++.  
-# Usage  
-## Example  
+# iniParser
+Date: 25/01/2024  
+Simple INI Parser written in C++.
+# Usage:
+## Example:
 I still have some work to do so this code will not work for now...  
 ```cpp
 #include <iostream>
