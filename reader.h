@@ -8,7 +8,6 @@ class Parser;
 class Reader {
 public:
     Reader(std::ifstream& inputfile) : inputfileRef(inputfile) {
-        std::cout << "inside Reader::Reader(ifstream&)\n";
         for (int i = 0; inputfile.good() && i < BOUND; i++) {
             buffer[i] = inputfile.get();
             length++;
@@ -19,7 +18,6 @@ public:
         return length;
     }
     ~Reader() {
-        std::cout << "inside Reader::~Reader()\n";
         inputfileRef.close();
     }
 private:
