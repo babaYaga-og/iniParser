@@ -14,15 +14,11 @@ public:
 
 	Graph(string name_) : _id(name_) { //root = createNode(std::string("root"), 0);
 		root = &rootNode;
-		
-		cout << "inside Graph::Graph()\n";
 	}
 	Graph(unsigned int numnode_, string name_) : _id(name_) {
 		root = &rootNode;
-		cout << "inside Graph::Graph(unsigned int)\n";
-
 	}
-	~Graph() { cout << "inside Graph::~Graph()\n"; }
+	~Graph() { }
 
 	unique_ptr<Node> createNode(std::string name, std::string value)
 	{
@@ -30,7 +26,6 @@ public:
 		//struct Node* node_ = new Node(name, value);
 		unique_ptr<Node> node_ = make_unique<Node>(name, value);
 		upn[numberofnodes++] = std::move(node_);
-		std::cout << "how many nodes created?: " << numberofnodes << "\n";
 
 		return nullptr;
 	}
@@ -59,12 +54,10 @@ public:
 	public:
 		Node() {
 			id = "root", list.data = "";
-			std::cout << "inside Graph::Node::Node()\n";
 		}
 		Node(std::string name_, std::string val)
 		{
 			id = name_; list.data = val;
-			std::cout << "inside Graph::Node(string, int)\n";
 		}
 
 		string getdata()
@@ -83,7 +76,6 @@ public:
 			struct Graph::Node* next;
 
 			List() {
-				std::cout << "inside Graph::Node::List()\n";
 				data = ""; prev, next = nullptr;
 			}
 
