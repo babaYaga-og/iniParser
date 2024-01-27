@@ -1,0 +1,15 @@
+
+;sdkfjlaskfj
+[owner] ; section 
+name = John Doe  ; key value pair
+organization = Acme Widgets Inc. ; another key val pair
+
+;comments
+
+[database]
+; use IP address in case network name resolution is not working
+server = 192.0.2.62     
+port = 143
+file = "payroll.dat"
+;comments before the end 
+ini = end ; need at the end this is my special touch
