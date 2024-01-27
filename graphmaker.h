@@ -7,10 +7,7 @@ public:
 
 	GraphMaker()  { }
 
-	~GraphMaker() { 
-		std::cout << "inside GraphMaker::~GraphMaker()\n";
-		//delete g;
-	}
+	~GraphMaker() { }
 	std::unique_ptr<Graph> operator()(std::string& name)
 	{
 		return make_unique<Graph>(name);
