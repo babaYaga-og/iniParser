@@ -3,6 +3,7 @@
 #include<fstream>
 
 #define BOUND 10000
+
 class Parser;
 class Reader {
 public:
