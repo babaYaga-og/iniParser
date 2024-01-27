@@ -10,7 +10,7 @@
 class Parser {
 public:
     Parser(std::ifstream& inputfile) : error(0) {
-        cout << "inside Parser::Parser(ifstream&)\n";
+        //cout << "inside Parser::Parser(ifstream&)\n";
         Reader reader(inputfile);
         length = reader.length;
         for (int i = 0; i < reader.length; i++)
@@ -22,7 +22,9 @@ public:
     }
 
     int printBuffer() {
-        for (int i = 0; i < length; i++) { std::cout << buffer[i]; }
+        for (int i = 0; i < length; i++) { 
+            std::cout << buffer[i];
+        }
         return length;
     }
 
@@ -41,7 +43,8 @@ public:
                 for (int j = 0; j < numofnode; j++) {
                     string nodeid = currentgraph->getNodeID(currentgraph->getNodePtr(j));
                     if (nodeid == keyn) {
-                        cout << currentgraph->getNodeData(currentgraph->getNodePtr(j));
+                       data = currentgraph->getNodeData(currentgraph->getNodePtr(j));
+                      // cout << data;
                     }
                 }
             }
@@ -50,12 +53,11 @@ public:
             }
         }
         return data;
-        /*cout << "\ngraphs created:" << id;
-            cout << "\nnumber of nodes in " << id;
-            cout << ":" << upg[i + 1]->getnumnodes() << "\n";*/
     }
 
-    ~Parser() { cout << "\ninside Parser::~Parser()\n"; }
+    ~Parser() { 
+       // cout << "\ninside Parser::~Parser()\n";
+    }
 
 private:
     shared_ptr<Graph> upg[100];
@@ -199,7 +201,7 @@ private:
                 }
             }
             unsigned int totalLineNo = newlineindexCount;
-            cout << "total number of lines = " << totalLineNo << "\n"; // success
+            cout << "\ntotal number of lines = " << totalLineNo << "\n"; // success
 
             cout << "\n\n===============PARSED DATA==============\n";
             for (unsigned int i = 0; i <= totalLineNo; i++)
@@ -236,17 +238,12 @@ private:
             COMPLETE = true;
         }
         if (COMPLETE) {
-            cout << "number of sections = " << numberofsection << "\n";
-            /*for (int i = 0; i < numberofsection; i++) {
-
-                string id = upg[i + 1]->getGraphID();
-                cout << "\ngraphs created:" << id;
-                cout << "\nnumber of nodes in " << id;
-                cout << ":" << upg[i + 1]->getnumnodes() << "\n";
-            }*/
+            cout << "\nnumber of sections = " << numberofsection << "\n";
         }
 
         return 0;
     }
+
+
 };
 
