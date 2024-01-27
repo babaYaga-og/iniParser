@@ -3,7 +3,10 @@
 #include <unordered_map>
 #include "reader.h"
 #include "graph.h"
+#include "graphmaker.h"
+
 #define BOUND 10000
+
 class Parser {
 public:
     Parser(std::ifstream& inputfile) : error(0) {
@@ -22,19 +25,51 @@ public:
         for (int i = 0; i < length; i++) { std::cout << buffer[i]; }
         return length;
     }
-    //int get(string, string);
 
+    std::string get(std::string secn, std::string keyn) {
+
+        std::string sectname = secn;
+        std::string keytofind = keyn;
+        std::string data;
+
+        for (int i = 0; i < numberofsection; i++) {
+            shared_ptr<Graph> currentgraph = upg[i + 1];
+            string id = currentgraph->getGraphID();
+            if (id == secn) {
+                int numofnode = currentgraph->getnumnodes();
+
+                for (int j = 0; j < numofnode; j++) {
+                    string nodeid = currentgraph->getNodeID(currentgraph->getNodePtr(j));
+                    if (nodeid == keyn) {
+                        cout << currentgraph->getNodeData(currentgraph->getNodePtr(j));
+                    }
+                }
+            }
+            else {
+                continue;
+            }
+        }
+        return data;
+        /*cout << "\ngraphs created:" << id;
+            cout << "\nnumber of nodes in " << id;
+            cout << ":" << upg[i + 1]->getnumnodes() << "\n";*/
+    }
 
     ~Parser() { cout << "\ninside Parser::~Parser()\n"; }
 
 private:
-    Graph g;
+    shared_ptr<Graph> upg[100];
+    //Graph* g[100] = { nullptr };
     int length;
     char buffer[BOUND];
     int error;
+    unsigned int numberofsection = 0;
+    int* sectionIndex;
 
     bool COMPLETE = false;
     int currentState = 0;
+    
+    GraphMaker gm;
 
     string findSections(unsigned int cursor, unsigned int next)
     {
@@ -49,6 +84,9 @@ private:
                 length--;
                 cursor++;
             }
+           // std::cout << numberofsection;
+
+            upg[numberofsection] = gm(buf);
         return buf;
     }
 
@@ -83,9 +121,7 @@ private:
                         goto done;
                     }
                 }
-                
             }
-            
             else if (buffer[cursor] != '\n' && buffer[cursor] != ' ')
             {  
                 done:
@@ -97,6 +133,8 @@ private:
             cursor++;
         }
         std::unordered_map<std::string, std::string> kvPair = { {kbuf, vbuf} };
+
+        upg[numberofsection]->createNode(kbuf, vbuf);
         return kvPair;
     }
 
@@ -141,10 +179,12 @@ private:
     }
 
     int parseBuffer() {
+
        /* for (int i = 0; i < length; i++)
         {
             cout << "buffer[" << i << "] = " << buffer[i] << "\n";
         }*/
+
         while (!COMPLETE)
         {
             unsigned int newlineindex[BOUND] = { 0 };
@@ -165,20 +205,22 @@ private:
             for (unsigned int i = 0; i <= totalLineNo; i++)
             {
                 if (buffer[newlineindex[i]] == '[') {
-                    cout << "section: " << findSections(newlineindex[i] + 1, newlineindex[i + 1]) << "\n";
+                    numberofsection++;
+                    cout << "init section: " << findSections(newlineindex[i] + 1, newlineindex[i + 1]) << "\n";
                 }
                 else if (buffer[newlineindex[i]] == ';') {
                     cout << "init comment: " << findComments(newlineindex[i] + 1, newlineindex[i + 1]) << "\n";
                 }
-
                 else if(buffer[newlineindex[i]+1] != ' ' && buffer[newlineindex[i]+1] != '\n') {
 
                     if (buffer[newlineindex[i] + 1] == ';') { continue; }
-                    else if (buffer[newlineindex[i]+1] == '[') { cout << "section: " << findSections(newlineindex[i] + 2, newlineindex[i + 1]) << "\n"; }
+                    else if (buffer[newlineindex[i]+1] == '[') {
+                        numberofsection++;
+                        cout << "section: " << findSections(newlineindex[i] + 2, newlineindex[i + 1]) << "\n";
+                    }
                     else {
                         std::unordered_map<std::string, std::string>
                             kvpair = findKeys(newlineindex[i] + 1, newlineindex[i + 1]);
-
                         auto print_key_value = [](const auto& key, const auto& value)
                             {
                                 std::cout << "Key:" << key << " Value:" << value << "\n";
@@ -188,17 +230,23 @@ private:
                     }
                 }
                 else {
-
                 }
             }
-
             cout << "\n===============PARSED DATA==============\n\n";
             COMPLETE = true;
+        }
+        if (COMPLETE) {
+            cout << "number of sections = " << numberofsection << "\n";
+            /*for (int i = 0; i < numberofsection; i++) {
+
+                string id = upg[i + 1]->getGraphID();
+                cout << "\ngraphs created:" << id;
+                cout << "\nnumber of nodes in " << id;
+                cout << ":" << upg[i + 1]->getnumnodes() << "\n";
+            }*/
         }
 
         return 0;
     }
-
-
 };
 
