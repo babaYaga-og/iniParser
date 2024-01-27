@@ -18,7 +18,7 @@ int main()
 
         Parser p(inputfile);
         p.printBuffer();
-        //string data = p.get("some section", "someKey");
+        string data = p.get("some section", "someKey");
         return 0;
 }
 ```
