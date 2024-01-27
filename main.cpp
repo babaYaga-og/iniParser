@@ -14,6 +14,6 @@ int main()
         p.printBuffer();
         string data = p.get("owner", "organization");
 
-        cout << "\n";
+        cout << "\n" << data << "\n";
         return 0;
 }
