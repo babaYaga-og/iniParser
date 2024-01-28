@@ -24,5 +24,6 @@ int main()
 ```
 ## TODO
 1. Rewrite all of this and make it better
-2. idk yet
+2. Fix Duplicate Key-Value pair handling (as of now it will print the last duplicate item in a given section)
+3. ...other problems I find
 
