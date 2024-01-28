@@ -44,6 +44,7 @@ public:
                     string nodeid = currentgraph->getNodeID(currentgraph->getNodePtr(j));
                     if (nodeid == keyn) {
                        data = currentgraph->getNodeData(currentgraph->getNodePtr(j));
+                        break;
                       // cout << data;
                     }
                 }
