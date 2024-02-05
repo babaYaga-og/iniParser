@@ -12,4 +12,4 @@ server = 192.0.2.62
 port = 143
 file = "payroll.dat"
 ;comments before the end 
-ini = end ; need at the end this is my special touch
+ini = end ; needed at the end... this is my special touch
